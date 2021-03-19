@@ -178,6 +178,11 @@ contract Chef is Ownable {
         emit Reward(msg.sender, _rwid);
     }
 
+    // Airdrop tickets to users only for owner
+    function airDropTicket(address _receive,uint256 _amount) external onlyOwner {
+        ticketBalances[_receive] = ticketBalances[_receive] + _amount;
+    }
+
     // Airdrop by owner
     function airDrop() external onlyOwner {
 
