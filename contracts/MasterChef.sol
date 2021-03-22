@@ -92,6 +92,7 @@ contract Chef is Ownable {
 
     event Reward(address indexed user, uint256 indexed saltID);
     event AirDrop(address indexed user, uint256 indexed saltID);
+    event AirDropTickets(address user, uint256 amount);
 
     function saltLength() public view returns (uint256) {
         return saltInfo.length;
@@ -178,12 +179,16 @@ contract Chef is Ownable {
         emit Reward(msg.sender, _rwid);
     }
 
-    // Airdrop tickets to users only for owner
-    function airDropTicket(address _receive,uint256 _amount) external onlyOwner {
+    /// @notice Airdrop tickets to users only for owner
+    /// @param _receive Received user address
+    /// @param _amount The number of airdrop tickets, decimal 18
+    function airDropTickets(address _receive,uint256 _amount) external onlyOwner {
+        require(_amount > 0, "Quantity must be greater than 0");
         ticketBalances[_receive] = ticketBalances[_receive] + _amount;
+        emit AirDropTickets(_receive, _amount);
     }
 
-    // Airdrop by owner
+    // Airdrop NFT by owner
     function airDrop() external onlyOwner {
 
         uint256 _rwid = _draw();
@@ -204,7 +209,7 @@ contract Chef is Ownable {
         emit AirDrop(airdropList[rnd], _rwid);
     }
 
-    // Airdrop by user
+    // Airdrop NFT by user
     function airDropByUser() external {
 
         // EOA only

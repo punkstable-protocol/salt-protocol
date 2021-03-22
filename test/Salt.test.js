@@ -9,7 +9,7 @@ contract('Salt', ([alice, bob, carol, minter]) => {
             this.salt = await Salt.new('0xa5409ec958c83c3f309868babaca7c86dcb077c1', { from: alice });
             this.masterChef = await MasterChef.new(this.salt.address, '100000000000000000000', '0', { from: alice });
             await this.salt.addMinter(this.masterChef.address, { from: alice });
-            
+
             this.lp = await MockERC20.new('LPToken', 'LP', '10000000000', { from: minter });
             await this.lp.transfer(alice, '1000', { from: minter });
             await this.lp.transfer(bob, '1000', { from: minter });
@@ -77,7 +77,7 @@ contract('Salt', ([alice, bob, carol, minter]) => {
                 this.masterChef.claim(1, 1, { from: bob }),
                 'need payout claim fee',
             );
-            await this.masterChef.claim(1, 1, { from: bob, value: claimFee});
+            await this.masterChef.claim(1, 1, { from: bob, value: claimFee });
             assert.equal((await this.salt.balanceOf(bob, 1)).valueOf(), '1');
         });
 

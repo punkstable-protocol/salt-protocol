@@ -34,15 +34,15 @@ module.exports = {
    *
    * $ truffle test --network <network-name>
    */
-
+  migrations_directory: "./migrations/ignore_migrations",
+  // migrations_directory: "./migrations/",
   networks: {
-    dev: {
+    development: {
       host: '0.0.0.0',
       port: 8545,
-      network_id: '1001',
-      gasPrice: 50000000000,
-      gas: 8000000,
-      network_id: '1001',
+      network_id: '5777',
+      gasPrice: 20000000000,
+      gas: 6000000
     },
     mainnet: {
       network_id: '1',
