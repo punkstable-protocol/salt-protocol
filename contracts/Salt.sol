@@ -1025,7 +1025,7 @@ contract ERC1155Tradable is ERC1155, ERC1155MintBurn, ERC1155Metadata, Ownable, 
  * Salt - let's saltmaking
  */
 contract Salt is ERC1155Tradable {
-	constructor(address _proxyRegistryAddress) public ERC1155Tradable("Salt Culture", "SALT", _proxyRegistryAddress) {
+	constructor(address _proxyRegistryAddress) public ERC1155Tradable("Salt Box", "SALT", _proxyRegistryAddress) {
 		_setBaseMetadataURI("https://api.ricequant.fi/salts/");
 	}
 
