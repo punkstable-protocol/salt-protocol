@@ -86,7 +86,7 @@ module.exports = {
       gasPrice: 20000000000, // 20 gwei
       gas: 6900000,
       from: process.env.DEPLOYER_ACCOUNT,
-      timeoutBlocks: 500,
+      // timeoutBlocks: 500,
       networkCheckTimeout: 60000,
     },
     bnbtestnet: {
@@ -94,8 +94,8 @@ module.exports = {
       provider: () => {
         return new HDWalletProvider(process.env.DEPLOYER_PRIVATE_KEY || '', process.env.BNB_TESTNET_API)
       },
-      // gasPrice: 20000000000, //20 gwei
-      gas: 6900000,
+      gasPrice: 20000000000, //20 gwei
+      gas: 8000000,
       from: process.env.DEPLOYER_ACCOUNT,
       // timeoutBlocks: 500,
       networkCheckTimeout: 60000,

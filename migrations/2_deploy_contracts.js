@@ -3,7 +3,17 @@ const MasterChef = artifacts.require("MasterChef");
 const Salt = artifacts.require("Salt");
 const { writeFile, unlinkFile } = require("../utils/fsFile");
 
-const contractAddressFile = "deployedContract.txt"
+const contractAddressFile = (_network) => {
+    let deployedFile = "deployedContract.txt"
+    let testDeployedFile = "testDeployedContract.txt"
+    switch (_network) {
+        case "bnbmainnet":
+        case "mainnet":
+            return deployedFile
+        default:
+            return testDeployedFile
+    }
+}
 
 const getProxyRegistryAddress = (_network) => {
     switch (_network) {
@@ -75,8 +85,8 @@ module.exports = migration;
 // contract
 
 async function deployMainContracts(deployer, network) {
-    let deployTime = new Date()
     if (network != 'test') {
+        let deployTime = new Date();
         // OpenSea proxy registry addresses for rinkeby and mainnet.
         let proxyRegistryAddress = getProxyRegistryAddress(network);
         await deployer.deploy(Salt,
@@ -94,8 +104,8 @@ async function deployMainContracts(deployer, network) {
         let salt = await Salt.deployed();
         let masterChef = await MasterChef.deployed();
         await salt.addMinter(masterChef.address);
-        writeFile(contractAddressFile, `\ndeployed time: ${deployTime.toUTCString()}\n`)
-        writeFile(contractAddressFile, `Salt: ${salt.address}\n`)
-        writeFile(contractAddressFile, `MasterChef: ${masterChef.address}\n`)
+        writeFile(contractAddressFile(network), `\ndeployed time: ${deployTime.toUTCString()}\n`)
+        writeFile(contractAddressFile(network), `Salt: ${salt.address}\n`)
+        writeFile(contractAddressFile(network), `MasterChef: ${masterChef.address}\n`)
     }
 }
