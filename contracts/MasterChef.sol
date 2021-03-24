@@ -295,11 +295,9 @@ contract MasterChef is Chef {
     constructor(
         ISalt _Salt,
         uint256 _ticketPerBlock,
-        uint256 _startBlock
     ) public {
         Salt = _Salt;
         ticketPerBlock = _ticketPerBlock;
-        startBlock = _startBlock;
         saltInfo.push(SaltInfo({
             saltID: 0,
             amount: 0,
@@ -309,6 +307,10 @@ contract MasterChef is Chef {
 
     function poolLength() external view returns (uint256) {
         return poolInfo.length;
+    }
+
+    function setStartBlock(uint256 _startBlock) external onlyOwner {
+        startBlock = _startBlock;
     }
 
     // Add a new lp to the pool. Can only be called by the owner.
