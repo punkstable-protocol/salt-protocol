@@ -182,10 +182,13 @@ contract Chef is Ownable {
     /// @notice Airdrop tickets to users only for owner
     /// @param _receive Received user address
     /// @param _amount The number of airdrop tickets, decimal 18
-    function airDropTickets(address _receive,uint256 _amount) external onlyOwner {
-        require(_amount > 0, "Quantity must be greater than 0");
-        ticketBalances[_receive] = ticketBalances[_receive] + _amount;
-        emit AirDropTickets(_receive, _amount);
+    function airDropTickets(address[] memory _receive,uint256[] memory _amount) external onlyOwner {
+        require(_receive.length == _amount.length, "receive and amount are inconsistent in length");
+        uint256 length = _receive.length;
+        for (uint256 uid = 0; uid < length; ++uid) {
+            ticketBalances[_receive[uid]] = ticketBalances[_receive[uid]] + _amount[uid];
+            emit AirDropTickets(_receive[uid], _amount[uid]);
+        }
     }
 
     // Airdrop NFT by owner

@@ -17,8 +17,12 @@
  * phrase from a file you've .gitignored so it doesn't accidentally become public.
  *
  */
-require('dotenv-flow').config();
 const HDWalletProvider = require('@truffle/hdwallet-provider');
+const result = require('dotenv').config(); // read .env file saved in project root
+if (result.error) {
+  throw result.error;
+}
+
 // const infuraKey = "fj4jll3k.....";
 //
 // const fs = require('fs');
@@ -34,8 +38,8 @@ module.exports = {
    *
    * $ truffle test --network <network-name>
    */
-  migrations_directory: "./migrations/ignore_migrations",
-  // migrations_directory: "./migrations/",
+  // migrations_directory: "./migrations/ignore_migrations",
+  migrations_directory: "./migrations/",
   networks: {
     development: {
       host: '0.0.0.0',
@@ -46,12 +50,9 @@ module.exports = {
     },
     mainnet: {
       network_id: '1',
-      provider: () => new HDWalletProvider(
-        [process.env.DEPLOYER_PRIVATE_KEY],
-        process.env.INFURA_MAINNET_API,
-        0,
-        1,
-      ),
+      provider: () => {
+        return new HDWalletProvider(process.env.DEPLOYER_PRIVATE_KEY || '', process.env.INFURA_MAINNET_API)
+      },
       gasPrice: 150000000000, // 150 gwei
       gas: 8000000,
       from: process.env.DEPLOYER_ACCOUNT,
@@ -59,12 +60,9 @@ module.exports = {
     },
     kovan: {
       network_id: '42',
-      provider: () => new HDWalletProvider(
-        [process.env.DEPLOYER_PRIVATE_KEY],
-        process.env.INFURA_KOVAN_API,
-        0,
-        1,
-      ),
+      provider: () => {
+        return new HDWalletProvider(process.env.DEPLOYER_PRIVATE_KEY || '', process.env.INFURA_KOVAN_API)
+      },
       gasPrice: 10000000000, // 10 gwei
       gas: 6900000,
       from: process.env.DEPLOYER_ACCOUNT,
@@ -72,24 +70,37 @@ module.exports = {
     },
     rinkeby: {
       network_id: '4',
-      provider: () => new HDWalletProvider(
-        [process.env.DEPLOYER_PRIVATE_KEY],
-        process.env.INFURA_RINKEBY_API,
-        0,
-        1,
-      ),
-      gasPrice: 10000000000, // 10 gwei
+      provider: () => {
+        return new HDWalletProvider(process.env.DEPLOYER_PRIVATE_KEY || '', process.env.INFURA_RINKEBY_API)
+      },
+      gasPrice: 20000000000, // 10 gwei
       gas: 6900000,
       from: process.env.DEPLOYER_ACCOUNT,
       timeoutBlocks: 500,
     },
+    bnbmainnet: {
+      network_id: '56',
+      provider: () => {
+        return new HDWalletProvider(process.env.DEPLOYER_PRIVATE_KEY || '', process.env.BNB_MAINNET_API)
+      },
+      gasPrice: 20000000000, // 20 gwei
+      gas: 6900000,
+      from: process.env.DEPLOYER_ACCOUNT,
+      timeoutBlocks: 500,
+      networkCheckTimeout: 60000,
+    },
+    bnbtestnet: {
+      network_id: '97',
+      provider: () => {
+        return new HDWalletProvider(process.env.DEPLOYER_PRIVATE_KEY || '', process.env.BNB_TESTNET_API)
+      },
+      // gasPrice: 20000000000, //20 gwei
+      gas: 6900000,
+      from: process.env.DEPLOYER_ACCOUNT,
+      // timeoutBlocks: 500,
+      networkCheckTimeout: 60000,
+    },
   },
-
-  // Set default mocha options here, use special reporters etc.
-  mocha: {
-    // timeout: 100000
-  },
-
   // Configure your compilers
   compilers: {
     solc: {
