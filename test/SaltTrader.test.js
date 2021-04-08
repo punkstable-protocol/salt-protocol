@@ -10,7 +10,7 @@ contract('SaltTrader', ([alice, bob, carol, minter]) => {
         beforeEach(async () => {
             this.mockProxy = await MockProxy.new();
             this.salt = await Salt.new(this.mockProxy.address, { from: alice });
-            this.masterChef = await MasterChef.new(this.salt.address, '100000000000000000000', '0', { from: alice });
+            this.masterChef = await MasterChef.new(this.salt.address, '500000000000000000', { from: alice });
             this.saltTrader = await SaltTrader.new(this.salt.address, { from: alice });
 
             await this.salt.addMinter(this.masterChef.address, { from: alice });
@@ -20,7 +20,7 @@ contract('SaltTrader', ([alice, bob, carol, minter]) => {
             await this.lp.transfer(bob, '1000', { from: minter });
             await this.lp.transfer(carol, '1000', { from: minter });
 
-            await this.masterChef.add('100', this.lp.address, true);
+            await this.masterChef.add('1', this.lp.address, true);
 
             const maxAmount = 1000;
             // 1 ETH

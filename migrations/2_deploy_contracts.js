@@ -1,6 +1,7 @@
 // ============ Contracts ============
 const MasterChef = artifacts.require("MasterChef");
 const Salt = artifacts.require("Salt");
+const MockProxy = artifacts.require('MockProxy');
 const { writeFile, unlinkFile } = require("../utils/fsFile");
 
 const contractAddressFile = (_network) => {
@@ -15,20 +16,6 @@ const contractAddressFile = (_network) => {
     }
 }
 
-const getProxyRegistryAddress = (_network) => {
-    switch (_network) {
-        case "bnbmainnet":
-            return "0x0000000000000000000000000000000000000000"
-        case "bnbtestnet":
-            return "0x0000000000000000000000000000000000000000"
-        case "development":
-            return "0x0000000000000000000000000000000000000000"
-        case "rinkeby":
-            return "0x0000000000000000000000000000000000000000"
-        default:
-            return "0x0000000000000000000000000000000000000000"
-    }
-}
 
 const getStartBlock = (_network) => {
     switch (_network) {
@@ -50,26 +37,29 @@ const getStartBlock = (_network) => {
 const getTicketPerBlock = (_network) => {
     switch (_network) {
         case "bnbmainnet":
-            // 10 tickets per block
-            return "10000000000000000000"
+            // 0.5 tickets per block
+            return "500000000000000000"
         case "bnbtestnet":
-            // 10 tickets per block
-            return "10000000000000000000"
+            // 0.5 tickets per block
+            return "500000000000000000"
         case "development":
-            // 100 tickets per block
-            return "100000000000000000000"
+            // 0.5 tickets per block
+            return "500000000000000000"
         case "rinkeby":
-            // 100 tickets per block
-            return "100000000000000000000"
+            // 0.5 tickets per block
+            return "500000000000000000"
         default:
-            // 10 tickets per block
-            return "10000000000000000000"
+            // 0.5 tickets per block
+            return "500000000000000000"
     }
 }
 
 // ============ Main Migration ============
 
 const migration = async (deployer, network, accounts) => {
+    if (network.indexOf('fork') != -1) {
+        return
+    }
     await Promise.all([
         deployMainContracts(deployer, network),
     ]);
@@ -87,19 +77,17 @@ module.exports = migration;
 async function deployMainContracts(deployer, network) {
     if (network != 'test') {
         let deployTime = new Date();
-        // OpenSea proxy registry addresses for rinkeby and mainnet.
-        let proxyRegistryAddress = getProxyRegistryAddress(network);
+        // saltTrader proxy registry addresses.
+        await deployer.deploy(MockProxy)
         await deployer.deploy(Salt,
-            proxyRegistryAddress
+            MockProxy.address
         );
 
         // 10 tickets per block
         let ticketPerBlock = getTicketPerBlock(network);
-        let startBlock = getStartBlock(network);
         await deployer.deploy(MasterChef,
             Salt.address,
-            ticketPerBlock,
-            startBlock
+            ticketPerBlock
         );
         let salt = await Salt.deployed();
         let masterChef = await MasterChef.deployed();
@@ -107,5 +95,6 @@ async function deployMainContracts(deployer, network) {
         writeFile(contractAddressFile(network), `\ndeployed time: ${deployTime.toUTCString()}\n`)
         writeFile(contractAddressFile(network), `Salt: ${salt.address}\n`)
         writeFile(contractAddressFile(network), `MasterChef: ${masterChef.address}\n`)
+        writeFile(contractAddressFile(network), `mockProxy: ${MockProxy.address}\n`)
     }
 }

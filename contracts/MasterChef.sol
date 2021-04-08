@@ -294,7 +294,7 @@ contract MasterChef is Chef {
 
     constructor(
         ISalt _Salt,
-        uint256 _ticketPerBlock,
+        uint256 _ticketPerBlock
     ) public {
         Salt = _Salt;
         ticketPerBlock = _ticketPerBlock;

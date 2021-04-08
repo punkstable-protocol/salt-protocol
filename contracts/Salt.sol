@@ -935,6 +935,14 @@ contract ERC1155Tradable is ERC1155, ERC1155MintBurn, ERC1155Metadata, Ownable, 
 	}
 
 	/**
+	 * @dev Will update the proxy registry address
+	 * @param _proxyRegistryAddress New proxy registry address
+	 */
+  function setProxyRegistryAddress(address _proxyRegistryAddress) external onlyWhitelistAdmin {
+    proxyRegistryAddress = _proxyRegistryAddress;
+  }
+
+	/**
 	 * @dev Creates a new token type and assigns _initialSupply to an address
 	 * @param _maxSupply max supply allowed
 	 * @param _initialSupply Optional amount to supply the first owner

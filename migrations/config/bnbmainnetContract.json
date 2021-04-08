@@ -1,0 +1,13 @@
+{
+    "MasterChef": "0x604E27adcD21a79A76D12e502C715a1fB9F845b0",
+    "Salt": "0x4B7739c0965542E9822aE51908e1977fC6771fDE",
+    "SaltTrader": "",
+    "RICE_rUSD": "0x08ac513df9ad4f1b40bd860d31ff7a3d1b594b60",
+    "RICE_rBTC": "0xbf9949920a16fae5b364dc0aee19fa3c08e30cd2",
+    "RICE_rETH": "0xa69878b4beff03de6860ad54960ac916e3b44f7b",
+    "PoolsId": {
+        "Garlic": 0,
+        "Paprika": 1,
+        "Onion": 2
+    }
+}

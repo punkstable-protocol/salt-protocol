@@ -16,7 +16,7 @@ contract('Salt', ([alice, bob, carol, minter]) => {
     context('With Salt', () => {
         beforeEach(async () => {
             this.salt = await Salt.new('0xa5409ec958c83c3f309868babaca7c86dcb077c1', { from: alice });
-            this.masterChef = await MasterChef.new(this.salt.address, ether('100'), '0', { from: alice });
+            this.masterChef = await MasterChef.new(this.salt.address, ether('100'), { from: alice });
             await this.salt.addMinter(this.masterChef.address, { from: alice });
 
             this.lp = await MockERC20.new('LPToken', 'LP', ether('10000000000'), { from: minter });
@@ -65,6 +65,29 @@ contract('Salt', ([alice, bob, carol, minter]) => {
             assert.equal(userSalt[1], '1');
         });
 
+        it.only('No handling fee is required to claim salt', async () => {
+            let lp2 = await MockERC20.new('LPToken', 'LP2', ether('10000000000'), { from: minter });
+            await lp2.transfer(bob, ether('1000'), { from: minter });
+            let maxAmount = 1000;
+            let fixedPrice = '0';
+            let wid = 2;
+            await this.masterChef.add('100', lp2.address, true);
+            await this.salt.create(maxAmount, 0, "", "0x0");
+            await this.masterChef.addSalt(wid, maxAmount, fixedPrice);
+            await lp2.approve(this.masterChef.address, ether('1000'), { from: bob });
+            await advanceBlockNum('4');
+            await this.masterChef.deposit(1, '100', { from: bob });
+            await advanceBlockNum('24');
+            await this.masterChef.deposit(1, '0', { from: bob });
+            // let ticketBalance =  await this.masterChef.ticketBalanceOf(bob)
+            await this.masterChef.draw({ from: bob });
+
+            const claimFee = (await this.masterChef.claimFee(1, 1)).valueOf();
+
+            await this.masterChef.claim(1, 1, { from: bob, value: claimFee });
+            assert.equal((await this.salt.balanceOf(bob, 2)).valueOf(), '1');
+        });
+
         it('should claim salt amount and need pay fee', async () => {
             await this.lp.approve(this.masterChef.address, ether('1000'), { from: bob });
             await advanceBlockNum('4');
@@ -74,7 +97,6 @@ contract('Salt', ([alice, bob, carol, minter]) => {
             await this.masterChef.draw({ from: bob });
 
             const claimFee = (await this.masterChef.claimFee(1, 1)).valueOf();
-
             await expectRevert(
                 this.masterChef.claim(1, 0, { from: bob }),
                 'amount must not zero',
@@ -84,10 +106,14 @@ contract('Salt', ([alice, bob, carol, minter]) => {
                 this.masterChef.claim(1, 2, { from: bob }),
                 'amount is bad',
             );
-            await expectRevert(
-                this.masterChef.claim(1, 1, { from: bob }),
-                'need payout claim fee',
-            );
+
+            if (claimFee != '0') {
+                await expectRevert(
+                    this.masterChef.claim(1, 1, { from: bob }),
+                    'need payout claim fee',
+                );
+            }
+
             await this.masterChef.claim(1, 1, { from: bob, value: claimFee });
             assert.equal((await this.salt.balanceOf(bob, 1)).valueOf(), '1');
         });

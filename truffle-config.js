@@ -61,7 +61,7 @@ module.exports = {
     kovan: {
       network_id: '42',
       provider: () => {
-        return new HDWalletProvider(process.env.DEPLOYER_PRIVATE_KEY || '', process.env.INFURA_KOVAN_API)
+        return new HDWalletProvider(process.env.TEST_DEPLOYER_PRIVATE_KEY || '', process.env.INFURA_KOVAN_API)
       },
       gasPrice: 10000000000, // 10 gwei
       gas: 6900000,
@@ -71,11 +71,11 @@ module.exports = {
     rinkeby: {
       network_id: '4',
       provider: () => {
-        return new HDWalletProvider(process.env.DEPLOYER_PRIVATE_KEY || '', process.env.INFURA_RINKEBY_API)
+        return new HDWalletProvider(process.env.TEST_DEPLOYER_PRIVATE_KEY || '', process.env.INFURA_RINKEBY_API)
       },
       gasPrice: 20000000000, // 10 gwei
       gas: 6900000,
-      from: process.env.DEPLOYER_ACCOUNT,
+      from: process.env.TEST_DEPLOYER_ACCOUNT,
       timeoutBlocks: 500,
     },
     bnbmainnet: {
@@ -92,7 +92,7 @@ module.exports = {
     bnbtestnet: {
       network_id: '97',
       provider: () => {
-        return new HDWalletProvider(process.env.DEPLOYER_PRIVATE_KEY || '', process.env.BNB_TESTNET_API)
+        return new HDWalletProvider(process.env.TEST_DEPLOYER_PRIVATE_KEY || '', process.env.BNB_TESTNET_API)
       },
       gasPrice: 20000000000, //20 gwei
       gas: 8000000,

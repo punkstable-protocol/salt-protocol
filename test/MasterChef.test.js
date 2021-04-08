@@ -155,5 +155,9 @@ contract('MasterChef', ([alice, bob, carol, minter]) => {
             assert.equal((await this.lp.balanceOf(bob)).valueOf(), '1000');
             assert.equal((await this.lp.balanceOf(carol)).valueOf(), '1000');
         });
+        it('addSalt', async () => {
+            this.testmasterChef = await MasterChef.new('0x0000000000000000000000000000000000000000', '100', '300', { from: alice });
+            this.salt = Salt.new('0xa5409ec958c83c3f309868babaca7c86dcb077c1', { from: alice });
+        })
     });
 });

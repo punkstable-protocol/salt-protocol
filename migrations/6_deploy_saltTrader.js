@@ -1,12 +1,19 @@
 // ============ Contracts ============
-const Salt = artifacts.require("Salt");
 const SaltTrader = artifacts.require("SaltTrader");
 
+const getContractAddress = (_network) => {
+  let contractAddr = require(`./config/${_network}Contract.json`)
+  return contractAddr
+}
 
 
 // ============ Main Migration ============
 
 const migration = async (deployer, network, accounts) => {
+  if (network.indexOf('fork') != -1) {
+    return
+  }
+  this.contract = getContractAddress(network)
   await Promise.all([
     deployContracts(deployer, network),
   ]);
@@ -22,10 +29,6 @@ module.exports = migration;
 // contract
 
 async function deployContracts(deployer, network) {
-    if(network != 'test'){
-        let salt = await Salt.deployed();
-        await deployer.deploy(SaltTrader,
-            salt.address,
-        );
-    }
+  let saltAddr = this.contract.Salt;
+  await deployer.deploy(SaltTrader, saltAddr);
 }

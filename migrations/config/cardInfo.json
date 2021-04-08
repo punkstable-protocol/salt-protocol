@@ -1,0 +1,50 @@
+{
+    "1": {
+        "name": "Donald Trump",
+        "level": "Legendary",
+        "amount": 2,
+        "price": 0
+    },
+    "2": {
+        "name": "Joe Biden",
+        "level": "Epic",
+        "amount": 6,
+        "price": 0
+    },
+    "3": {
+        "name": "Barack Obama",
+        "level": "Epic",
+        "amount": 6,
+        "price": 0
+    },
+    "4": {
+        "name": "Bill Clinton",
+        "level": "Rare",
+        "amount": 16,
+        "price": 0
+    },
+    "5": {
+        "name": "George W. Bush",
+        "level": "Rare",
+        "amount": 16,
+        "price": 0
+    },
+    "6": {
+        "name": "George H. W. Bush",
+        "level": "Common",
+        "amount": 28,
+        "price": 0
+    },
+    "7": {
+        "name": "Ronald Reagan",
+        "level": "Common",
+        "amount": 28,
+        "price": 0
+    },
+    "8": {
+        "name": "James Carter",
+        "level": "Common",
+        "amount": 28,
+        "price": 0
+    }
+}

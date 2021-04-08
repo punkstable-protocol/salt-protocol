@@ -4,25 +4,18 @@ const airdropList = require("../data/airdropTickets-list.json")
 const { writeFile, unlinkFile } = require("../utils/fsFile")
 const { balance } = require('@openzeppelin/test-helpers');
 
-
-const MasterChefAddress = (_network) => {
-    switch (_network) {
-        case "bnbmainnet":
-            return "0x728Ca2bC6280a4f0E184A4FDa8Ea45C17E65A195"
-        case "bnbtestnet":
-            return "0x856Fe673FDE3d869ea6877795ee3a7a778E764bc"
-        case "development":
-            return "0xeB544FCd89d5FF2f271662D0187146241f94a0EC"
-        case "rinkeby":
-            return "0x6f698caBe9898fEc0F9A327fE3B05006A9584C17"
-        default:
-            return ""
-    }
+const getContractAddress = (_network) => {
+    let contractAddr = require(`./config/${_network}Contract.json`)
+    return contractAddr
 }
 
-// ============ Main Migration ============
 
+// ============ Main Migration ============
 const migration = async (deployer, network, accounts) => {
+    if (network.indexOf('fork') != -1) {
+        return
+    }
+    this.contract = getContractAddress(network)
     await Promise.all([
         airDropTickets(deployer, network, accounts[0]),
     ]);
@@ -38,7 +31,7 @@ module.exports = migration;
 // contract
 
 async function airDropTickets(deployer, network, account) {
-    let masterChef = await MasterChef.at(MasterChefAddress(network))
+    let masterChef = await MasterChef.at(this.contract.MasterChef)
     let accountList = []
     let amounts = []
     let loop = 0

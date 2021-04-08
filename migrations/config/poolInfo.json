@@ -1,0 +1,17 @@
+{
+    "0": {
+        "name": "Garlic",
+        "seedToken": "RICE_rUSD",
+        "harvestSymbol": "SALT"
+    },
+    "1": {
+        "name": "Paprika",
+        "seedToken": "RICE_rBTC",
+        "harvestSymbol": "SALT"
+    },
+    "2": {
+        "name": "Onion",
+        "seedToken": "RICE_rETH",
+        "harvestSymbol": "SALT"
+    }
+}
