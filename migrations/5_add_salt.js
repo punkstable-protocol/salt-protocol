@@ -1,11 +1,13 @@
 // ============ Contracts ============
 const MasterChef = artifacts.require("MasterChef");
 const Salt = artifacts.require("Salt");
-const cardInfo = require("./config/cardInfo.json")
 
 const getContractAddress = (_network) => {
-    let contractAddr = require(`./config/${_network}Contract.json`)
-    return contractAddr
+    return require(`./config/${_network}Contract.json`)
+}
+
+const getCardInfo = (_network) => {
+    return require(`./config/${_network}CardInfo.json`)
 }
 
 // add new cards
@@ -33,6 +35,8 @@ async function addSalts(deployer, network) {
         return
     }
     let contract = getContractAddress(network)
+    let cardItem = getCardInfo(network)
+    let saltTotal = 0
     if (network == "development") {
         this.salt = await Salt.deployed();
         this.masterChef = await MasterChef.deployed();
@@ -41,11 +45,11 @@ async function addSalts(deployer, network) {
         this.salt = await Salt.at(contract.Salt)
         this.masterChef = await MasterChef.at(contract.MasterChef)
     }
-    for (let cardId in cardInfo) {
+    for (let cardId in cardItem) {
         if (addCardList.indexOf(parseInt(cardId)) == -1) {
             continue
         }
-        let card = cardInfo[cardId]
+        let card = cardItem[cardId]
         let amount = card.amount.toString()
         let price = card.price.toString()
         let level = card.level
@@ -55,6 +59,8 @@ async function addSalts(deployer, network) {
         // Pool's fee 1%. Artist's fee 2%.
         // 1 ETH, fee is 0.03
         await this.masterChef.addSalt(cardId, amount, price)
-        console.log("add salt ", cardId, " amount ", amount)
+        saltTotal += parseInt(amount)
+        console.log(`add salt: ${cardId}, amount: ${amount}, level: ${level}, name: ${name}`)
     }
+    console.log("Salt Total: ", saltTotal)
 }

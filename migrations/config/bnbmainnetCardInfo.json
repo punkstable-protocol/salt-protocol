@@ -1,48 +1,48 @@
 {
     "1": {
-        "name": "Donald Trump",
-        "level": "Legendary",
-        "amount": 2,
+        "name": "KOKO in Mars",
+        "level": "Epic",
+        "amount": 6,
         "price": 0
     },
     "2": {
-        "name": "Joe Biden",
+        "name": "The call from Earth",
         "level": "Epic",
         "amount": 6,
         "price": 0
     },
     "3": {
-        "name": "Barack Obama",
-        "level": "Epic",
-        "amount": 6,
+        "name": "Stoner",
+        "level": "Rare",
+        "amount": 16,
         "price": 0
     },
     "4": {
-        "name": "Bill Clinton",
+        "name": "Stoner like Mario",
         "level": "Rare",
         "amount": 16,
         "price": 0
     },
     "5": {
-        "name": "George W. Bush",
-        "level": "Rare",
-        "amount": 16,
+        "name": "Pumpkin",
+        "level": "Common",
+        "amount": 28,
         "price": 0
     },
     "6": {
-        "name": "George H. W. Bush",
+        "name": "Refuse to go to work",
         "level": "Common",
         "amount": 28,
         "price": 0
     },
     "7": {
         "name": "Ronald Reagan",
-        "level": "Common",
-        "amount": 28,
+        "level": "Legendary",
+        "amount": 2,
         "price": 0
     },
     "8": {
-        "name": "James Carter",
+        "name": "Invest in Crypto",
         "level": "Common",
         "amount": 28,
         "price": 0
