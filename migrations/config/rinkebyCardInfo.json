@@ -46,5 +46,53 @@
         "level": "Common",
         "amount": 28,
         "price": 0
+    },
+    "9": {
+        "name": "うえはら あい",
+        "level": "Legendary",
+        "amount": 2,
+        "price": 0
+    },
+    "10": {
+        "name": "はたの ゆい",
+        "level": "Epic",
+        "amount": 6,
+        "price": 0
+    },
+    "11": {
+        "name": "Spiritual Rice",
+        "level": "Epic",
+        "amount": 6,
+        "price": 0
+    },
+    "12": {
+        "name": "Narcissism",
+        "level": "Rare",
+        "amount": 16,
+        "price": 0
+    },
+    "13": {
+        "name": "Pumpkin’s FOMO",
+        "level": "Rare",
+        "amount": 16,
+        "price": 0
+    },
+    "14": {
+        "name": "Calmness",
+        "level": "Common",
+        "amount": 28,
+        "price": 0
+    },
+    "15": {
+        "name": "Indifferent",
+        "level": "Common",
+        "amount": 28,
+        "price": 0
+    },
+    "16": {
+        "name": "Unrepentant",
+        "level": "Common",
+        "amount": 28,
+        "price": 0
     }
 }

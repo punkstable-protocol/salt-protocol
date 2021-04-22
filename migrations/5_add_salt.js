@@ -11,7 +11,8 @@ const getCardInfo = (_network) => {
 }
 
 // add new cards
-const addCardList = [1, 2, 3, 4, 5, 6, 7, 8]
+// const addCardList = [1, 2, 3, 4, 5, 6, 7, 8]
+const addCardList = [9, 10, 11, 12, 13, 14, 15, 16]
 
 // ============ Main Migration ============
 
@@ -60,7 +61,7 @@ async function addSalts(deployer, network) {
         // 1 ETH, fee is 0.03
         await this.masterChef.addSalt(cardId, amount, price)
         saltTotal += parseInt(amount)
-        console.log(`add salt: ${cardId}, amount: ${amount}, level: ${level}, name: ${name}`)
+        console.log(`add salt, SaltID: ${cardId}, amount: ${amount}, level: ${level}, name: ${name}`)
     }
     console.log("Salt Total: ", saltTotal)
 }

@@ -6,6 +6,6 @@
     "dotenv-flow": "^3.2.0"
   },
   "devDependencies": {
-    "truffle-plugin-verify": "^0.5.7"
+    "truffle-plugin-verify": "^0.4.1"
   }
 }

@@ -40,6 +40,12 @@ module.exports = {
    */
   // migrations_directory: "./migrations/ignore_migrations",
   migrations_directory: "./migrations/",
+  plugins: [
+    'truffle-plugin-verify'
+  ],
+  api_keys: {
+    bscscan: process.env.BSC_SCAN_API_KEY
+  },
   networks: {
     development: {
       host: '0.0.0.0',
@@ -113,13 +119,7 @@ module.exports = {
           runs: 50000
         },
         evmVersion: 'istanbul',
-      },
-    },
-  },
-  plugins: [
-    'truffle-plugin-verify'
-  ],
-  api_keys: {
-    etherscan: process.env.ETHERSCAN_API_KEY
-  },
+      }
+    }
+  }
 };
