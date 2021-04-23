@@ -94,5 +94,23 @@
         "level": "Common",
         "amount": 28,
         "price": 0
+    },
+    "17": {
+        "name": "みかみ ゆあ",
+        "level": "Legendary",
+        "amount": 1,
+        "price": 0
+    },
+    "18": {
+        "name": "さくら まな",
+        "level": "Epic",
+        "amount": 3,
+        "price": 0
+    },
+    "19": {
+        "name": "あすか きらら",
+        "level": "Epic",
+        "amount": 3,
+        "price": 0
     }
 }
